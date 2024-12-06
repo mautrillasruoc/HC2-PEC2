@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/styles/main.scss" />
+    <title>Artículo - Jornadas de Seguridad Informática</title>
+  </head>
+  <body>
+    <div class="articulo-container">
+      <header class="portada-header">
+        <div class="logo">
+          <img src="./assets/images/logo_inforweek.png" alt="Logo" />
+        </div>
+        <nav class="portada-nav">
+          <a href="participantes.html">Participantes</a>
+          <a href="articulo.html">Artículo</a>
+          <a href="libre.html">Libre</a>
+        </nav>
+      </header>
+
+      <main>
+        <div class="container my-5">
+            <div class="game-container p-4 shadow-sm rounded">
+                <h2 class="text-center mb-4">Juego de Seguridad Informática</h2>
+                <p id="questionText" class="question">¿Cuál de las siguientes contraseñas es la más segura?</p>
+    
+                <div id="options" class="d-flex flex-column">
+                    <!-- Opciones de respuesta generadas dinámicamente -->
+                </div>
+    
+                <div id="result" class="result text-center mt-3"></div>
+                <p id="questionCounter" class="text-center mt-2">Pregunta 1 de 4</p>
+    
+                <button id="restart" class="btn btn-secondary mt-3" style="display:none;" onclick="restartGame()">Volver a jugar</button>
+            </div>
+        </div>
+    
+        <script>
+            let currentQuestion = 0;
+            const questions = [
+                {
+                    question: "¿Cuál de las siguientes contraseñas es la más segura?",
+                    options: ["123456", "Qwerty123!", "Z7#kL9$5qR@", "Password1"],
+                    correct: 2
+                },
+                {
+                    question: "¿Cuál de estos es un buen método para proteger tus contraseñas?",
+                    options: ["Usar la misma contraseña para todo", "Guardar las contraseñas en un archivo de texto", "Usar un gestor de contraseñas", "Compartir las contraseñas con amigos"],
+                    correct: 2
+                },
+                {
+                    question: "¿Qué es el phishing?",
+                    options: ["Un tipo de malware", "Un ataque para robar información personal", "Un antivirus", "Un tipo de cifrado"],
+                    correct: 1
+                },
+                {
+                    question: "¿Cuál de las siguientes es una práctica de seguridad recomendada?",
+                    options: ["No actualizar los programas", "Utilizar contraseñas fáciles de recordar", "Utilizar la autenticación de dos factores", "Desactivar el firewall"],
+                    correct: 2
+                }
+            ];
+    
+            function loadQuestion() {
+                const question = questions[currentQuestion];
+                document.getElementById("questionText").textContent = question.question;
+                const options = document.getElementById("options");
+                options.innerHTML = '';  // Limpiar las opciones anteriores
+    
+                question.options.forEach((option, index) => {
+                    const button = document.createElement("button");
+                    button.classList.add("btn", "btn-primary", "btn-option");
+                    button.textContent = option;
+                    button.onclick = () => checkAnswer(index);
+                    options.appendChild(button);
+                });
+    
+                document.getElementById("questionCounter").textContent = `Pregunta ${currentQuestion + 1} de ${questions.length}`;
+            }
+    
+            function checkAnswer(selectedOption) {
+                const resultElement = document.getElementById("result");
+                const restartButton = document.getElementById("restart");
+                const options = document.getElementById("options");
+    
+                if (selectedOption === questions[currentQuestion].correct) {
+                    resultElement.textContent = "¡Correcto!";
+                    resultElement.style.color = "green";
+                } else {
+                    resultElement.textContent = "Incorrecto. Recuerda las mejores prácticas de seguridad.";
+                    resultElement.style.color = "red";
+                }
+    
+                // Desactivar las opciones después de seleccionar una
+                options.innerHTML = "";
+    
+                if (currentQuestion < questions.length - 1) {
+                    setTimeout(() => {
+                        currentQuestion++;
+                        loadQuestion();
+                        resultElement.textContent = '';
+                    }, 1500); // Espera 1.5 segundos antes de cargar la siguiente pregunta
+                } else {
+                    setTimeout(() => {
+                        resultElement.textContent = '¡Has terminado el juego!';
+                        restartButton.style.display = 'block';
+                    }, 1500);
+                }
+            }
+    
+            function restartGame() {
+                currentQuestion = 0;
+                document.getElementById("result").textContent = '';
+                document.getElementById("restart").style.display = "none";
+                loadQuestion();
+            }
+    
+            // Iniciar el juego al cargar la página
+            loadQuestion();
+        </script>
+      </main>
+
+      <div class="portada-footer">
+        <div class="footer-logo">
+          <img
+            src="./assets/images/logo_inforweek.png"
+            alt="Logo de las Jornadas"
+          />
+        </div>
+        <nav class="footer-nav">
+          <a href="index.html">Inicio</a>
+          <a href="participantes.html">Participantes</a>
+          <a href="articulo.html">Artículo</a>
+          <a href="libre.html">Libre</a>
+        </nav>
+        <div class="footer-social">
+          <a href="#"><i class="fab fa-google"></i></a>
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+    <!-- Footer adicional en la parte inferior -->
+    <footer class="portada-bottom-footer">
+        <div class="bottom-footer-content">
+          <img
+            src="./assets/images/logo.png"
+            alt="Universitat Oberta de Catalunya"
+          />
+          <p>
+            © 2024 - Jornadas de Seguridad Informática. Todos los derechos
+            reservados. Este sitio web ha sido diseñado y desarrollado por los
+            estudiantes del Máster en Aplicaciones Multimedia y Desarrollo Web
+            de la Universitat Oberta de Catalunya (UOC). Las imágenes, textos y
+            recursos utilizados son propiedad de sus respectivos autores. Queda
+            prohibida su reproducción total o parcial sin la autorización
+            expresa de los titulares de los derechos.
+          </p>
+        </div>
+      </footer>
+    </div>
+    <script src="./assets/scripts/main.js" type="module"></script>
+  </body>
+</html>

@@ -1,0 +1,337 @@
+/**
+ * Use this file to import partials.
+ * Do not include SCSS code in this file.
+ */
+
+/**
+ * Import variables
+ */
+@use "sass:color";
+@import "variables";
+
+/**
+  * Import npm dependencies
+  * see: https://v2.parceljs.org/features/module-resolution/
+  * see commented examples below
+  */
+@import "bootstrap/scss/bootstrap";
+@import "npm:@fortawesome/fontawesome-free/css/all.css";
+
+// @import "some-node-module";
+// @import "@some-company/some-node-module";
+
+/**
+  * Import layouts
+  * It's a best practice to use a different partial for each page
+  */
+
+@import "layouts/home";
+
+/**
+  * Do NOT include anything else in this file!
+  */
+
+/**
+  * Styles for portada
+  */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.portada-container {
+  display: grid;
+  grid-template-areas:
+    "header"
+    "image"
+    "content"
+    "footer";
+  grid-template-rows: auto 1fr auto auto;
+  grid-template-columns: 1fr;
+  width: 100vw; // Ocupa el ancho completo de la pantalla
+  min-height: 100vh;
+  text-align: center;
+  background-color: $portada-bg;
+
+  // Compatibilidad para navegadores sin CSS Grid
+  @supports not (display: grid) {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.portada-header,
+.portada-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1rem 2rem;
+}
+
+.logo,
+.footer-logo {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  font-weight: bold;
+  color: $uoc-corporate;
+}
+
+.portada-nav a,
+.footer-nav a {
+  margin: 0 1rem;
+  color: $uoc-corporate;
+  text-decoration: none;
+}
+
+.portada-main {
+  display: grid;
+  grid-template-rows: auto auto auto;
+  gap: 1rem;
+  align-items: center;
+  width: 100%;
+  padding: 2rem;
+}
+
+.portada-image img {
+  width: 60%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.portada-title {
+  font-size: 2.5rem;
+  color: $uoc-corporate;
+}
+
+.portada-subtitle {
+  font-size: 1.2rem;
+  color: color.adjust($uoc-masterbrand, $lightness: -10%);
+}
+
+.footer-social a {
+  margin: 0 0.5rem;
+  font-size: 1.2rem;
+  color: $uoc-corporate;
+}
+
+/* Grid para participantes */
+.participants-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.participant-card {
+  width: calc(33.333% - 2rem);
+  padding: 1rem;
+  text-align: center;
+  background-color: $card-bg;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: $mq-min-width) {
+    width: calc(50% - 1rem);
+  }
+
+  img {
+    max-width: 100%;
+    margin-bottom: 1rem;
+    border-radius: 50%;
+  }
+
+  .participant-name {
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: $uoc-corporate;
+  }
+
+  .participant-info {
+    font-size: 0.9rem;
+    color: $text-light;
+  }
+}
+
+.additional-speakers {
+  margin-top: 2rem;
+  font-size: 1rem;
+  color: $text-light;
+  text-align: center;
+}
+
+/* Estilos para el footer adicional */
+
+.portada-bottom-footer {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  width: 100%;
+  padding: 1rem;
+  color: white;
+  text-align: center;
+  background-color: $footer-bg;
+
+  .bottom-footer-content {
+    display: contents;
+  }
+
+  img {
+    width: 250px;
+    margin: 0 auto;
+  }
+
+  .footer-nav {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  a {
+    font-size: 0.9rem;
+    color: white;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+
+    a {
+      font-size: 1.2rem;
+      color: white;
+    }
+  }
+}
+
+/*Estilos para la página del artículo*/
+
+.articulo-container {
+  background-color: $portada-bg; /* Establece el fondo de todo el contenedor igual que en la portada */
+}
+
+.articulo-contenido {
+  max-width: 800px;
+  padding: 2rem;
+  margin: 0 auto;
+
+  img {
+    width: 100%;
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+  }
+
+  p {
+    margin-bottom: 1.5rem;
+    color: $text-light;
+    text-align: justify;
+  }
+
+  /* Ejemplo con pseudoclase :is() */
+  :is(h1, h2, h3) {
+    margin-bottom: 1.5rem;
+    font-family: $font-family-serif;
+    color: color.adjust($uoc-corporate, $lightness: -15%);
+  }
+
+  blockquote {
+    padding-left: 1rem;
+    margin: 1.5rem 0;
+    font-style: italic;
+    color: color.adjust($uoc-corporate, $lightness: -10%);
+    text-align: justify;
+    border-left: 4px solid $uoc-corporate;
+  }
+
+  ul {
+    padding-left: 1.5rem;
+    margin: 1.5rem 0;
+
+    li {
+      margin-bottom: 0.5rem;
+      list-style-type: disc;
+
+      /* Uso de :has() */
+      &:has(a) {
+        font-weight: bold;
+        color: color.adjust($uoc-corporate, $lightness: -15%);
+      }
+    }
+  }
+}
+
+/* Estilos para el juego de seguridad informática */
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between; // Asegura que el contenido se distribuya de manera equitativa
+  width: 100%;
+  height: 100%; // Hace que el contenedor ocupe todo el alto disponible
+  padding: 2rem;
+  margin-bottom: 28.95rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.question {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: $uoc-corporate;
+}
+
+.btn-option {
+  width: 100%;
+  margin: 0.5rem 0;
+  font-size: 1.2rem;
+}
+
+.result {
+  margin-top: 1.5rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.restart {
+  display: none;
+}
+
+/* Estilos de los botones y texto en caso de respuestas correctas o incorrectas */
+.result.correct {
+  color: green;
+}
+
+.result.incorrect {
+  color: red;
+}
+
+.btn-secondary {
+  color: white;
+  background-color: $uoc-corporate;
+  border: none;
+}
+
+.btn-secondary:hover {
+  background-color: color.adjust($uoc-corporate, $lightness: -10%);
+}
